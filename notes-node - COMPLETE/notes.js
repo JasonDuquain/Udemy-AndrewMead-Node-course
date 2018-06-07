@@ -4,7 +4,8 @@ const fs = require('fs');
 
 var fetchNotes = () => {
     try {
-        var notesString = fs.readFileSync('notes-data.json');
+        // the below 2 lines ensure new entries get appended as opposed to having existing lines removed and just the latest node added
+        var notesString = fs.readFileSync('notes-data.json'); // put this is the try blk in case the json file does not exist yet
         return JSON.parse(notesString);
     } catch(e) {
         return [];
@@ -21,6 +22,8 @@ var addNote = (title, body) => {
         title: title,
         body: body
     };
+	
+	// if duplicateNotes arr has any items (if the filter returns true) then the note already exists and it should not be added
     var duplicateNotes = notes.filter((note) => note.title === title);
     
     if (duplicateNotes.length === 0) {

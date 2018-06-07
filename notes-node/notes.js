@@ -39,20 +39,31 @@ var getAll = () => {
 };
 
 var getNote = (title) => {
-    console.log('getting note', title);
+    let notes = fetchNotes(); // store an arr of all the notes
+    let filteredNotes = notes.filter((note) => note.title === title); // return true if the title passed in matches a title in the notes arr
+    return filteredNotes[0]; // there is a chance this 1st item doesnt exist and returns undefined, in which case the else clause runs
 };
 
 var removeNote = (title) => {
+    let notes = fetchNotes(); // store an arr of all the notes
+    let filteredNotes = notes.filter((note) => note.title !== title); // filteredNotes is populated with all the of notes whose titles do not match the title passed in 
+    saveNotes(filteredNotes); 
     
+    return notes.length !== filteredNotes.length; //compare length of original notes arr to the filtered notes arr. If the remove note fn returns true that means a note was removed. If it returns false that means a note was not removed (they are eq). If they are not eq it is going to return true which is what we want beacuse a note was removed 
 };
 
-
+var logNote = (note) => {
+    console.log('-----')
+    console.log(`title: ${note.title}`);
+    console.log(`body: ${note.body}`);
+};
 
 module.exports = {
     addNote: addNote,
     getAll: getAll,
     getNote: getNote,
-    removeNote: removeNote
+    removeNote: removeNote,
+    logNote: logNote
 }
 
 
