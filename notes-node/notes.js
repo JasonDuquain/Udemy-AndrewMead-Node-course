@@ -25,7 +25,6 @@ var addNote = (title, body) => {
     
     // if duplicateNotes arr has any items (if the filter returns true) then the note already exists and it should not be added
     var duplicateNotes = notes.filter((note) => note.title === title);
-    
     if (duplicateNotes.length === 0) {
         notes.push(note);
         saveNotes(notes);
@@ -35,7 +34,7 @@ var addNote = (title, body) => {
 };
 
 var getAll = () => {
-    console.log('getting all notes');
+    return fetchNotes();
 };
 
 var getNote = (title) => {
@@ -48,7 +47,6 @@ var removeNote = (title) => {
     let notes = fetchNotes(); // store an arr of all the notes
     let filteredNotes = notes.filter((note) => note.title !== title); // filteredNotes is populated with all the of notes whose titles do not match the title passed in 
     saveNotes(filteredNotes); 
-    
     return notes.length !== filteredNotes.length; //compare length of original notes arr to the filtered notes arr. If the remove note fn returns true that means a note was removed. If it returns false that means a note was not removed (they are eq). If they are not eq it is going to return true which is what we want beacuse a note was removed 
 };
 
@@ -57,6 +55,7 @@ var logNote = (note) => {
     console.log(`title: ${note.title}`);
     console.log(`body: ${note.body}`);
 };
+
 
 module.exports = {
     addNote: addNote,
